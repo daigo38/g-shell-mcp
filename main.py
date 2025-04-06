@@ -33,13 +33,14 @@ async def execute_gas_code(
     try:
         # 環境変数から設定を取得
         gas_url = os.getenv('GAS_URL')
-        auth_server_url = os.getenv('AUTH_SERVER_URL', 'http://localhost:8000')
+        gas_api_key = os.getenv('GAS_API_KEY')
         
         if not gas_url:
             return {"error": "GAS_URLが設定されていません"}
         
         # リクエストデータの準備
         request_data = {
+            "apiKey": gas_api_key,
             "data": {
                 "code": code,
                 "functionName": function_name,
@@ -48,14 +49,8 @@ async def execute_gas_code(
             }
         }
         
-        # 認証サーバーでリクエストに署名
-        auth_response = requests.post(f"{auth_server_url}/sign", json=request_data)
-        auth_response.raise_for_status()
-        token = auth_response.json()["token"]
-        
         # GASにリクエスト送信
-        headers = {"Authorization": f"Bearer {token}"}
-        response = requests.post(gas_url, json=request_data, headers=headers)
+        response = requests.post(gas_url, json=request_data)
         response.raise_for_status()
         
         return response.json()
