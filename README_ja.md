@@ -4,6 +4,11 @@ G-Shell MCPは、Google Apps Script (GAS) を効率的に実行・管理する�
 
 このツールを使用することで、Google SheetsやGoogle Forms、その他のGoogleサービスをGASを通じて操作することができます。LLM（例：Claude）と連携することで、自然言語での操作が可能になります。
 
+> 🌟 **すぐに試してみる！**
+>
+> g-shellはGASSISTANTというAI搭載のGASエディタに搭載された機能です。
+> すぐ試したい場合、[GASSISTANT](https://www.gassistant.app)でお試しください！
+
 ## 機能
 
 - GASプロジェクトの実行と管理
@@ -24,7 +29,7 @@ G-Shell MCPは、Google Apps Script (GAS) を効率的に実行・管理する�
 1. **リポジトリのクローン**
 
 ```bash
-git clone https://github.com/yourusername/g-shell-mcp.git
+git clone https://github.com/daigo38/g-shell-mcp.git
 cd g-shell-mcp
 ```
 

@@ -4,6 +4,11 @@ G-Shell MCP is a Model Context Protocol (MCP) server for efficiently executing a
 
 This tool allows you to interact with Google Sheets, Google Forms, and other Google services through GAS. When integrated with LLMs (e.g., Claude), it enables natural language operations.
 
+> **Try it Now!**
+>
+> G-Shell is a feature integrated into GASSISTANT, an AI-powered GAS editor.
+> Want to try it immediately? Visit [GASSISTANT](https://www.gassistant.app)!
+
 ## Features
 
 - Execute and manage GAS projects
@@ -24,7 +29,7 @@ This tool allows you to interact with Google Sheets, Google Forms, and other Goo
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/yourusername/g-shell-mcp.git
+git clone https://github.com/daigo38/g-shell-mcp.git
 cd g-shell-mcp
 ```
 
@@ -80,7 +85,7 @@ For **Cursor**, save as `mcp.json` at:
    - Set a value for API key (recommend using a complex string for security)
    - Click "Save"
 
-   > ⚠️ **CRITICAL SECURITY WARNING**
+   > **CRITICAL SECURITY WARNING**
    >
    > NEVER share or expose your API key and Web App URL.
    > If these credentials are leaked, attackers can perform ANY action that your GAS script is capable of,
