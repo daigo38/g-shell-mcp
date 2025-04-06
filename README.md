@@ -1,36 +1,36 @@
 # G-Shell MCP Server
 
-G-Shell MCPは、Google Apps Script (GAS) を効率的に実行・管理するためのModel Context Protocol (MCP) サーバーです。
+G-Shell MCP is a Model Context Protocol (MCP) server for efficiently executing and managing Google Apps Script (GAS). 
 
-このツールを使用することで、Google SheetsやGoogle Forms、その他のGoogleサービスをGASを通じて操作することができます。LLM（例：Claude）と連携することで、自然言語での操作が可能になります。
+This tool allows you to interact with Google Sheets, Google Forms, and other Google services through GAS. When integrated with LLMs (e.g., Claude), it enables natural language operations.
 
-## 機能
+## Features
 
-- GASプロジェクトの実行と管理
-- Google Sheetsの編集・操作
-- Google Formsの作成・管理
-- その他のGoogleサービスとの連携
+- Execute and manage GAS projects
+- Edit and manipulate Google Sheets
+- Create and manage Google Forms
+- Integrate with other Google services
 
-## インストール
+## Installation
 
-### 前提条件
+### Prerequisites
 
 - Python 3.6+
-- Anthropic Claude Desktop アプリ（またはCursor）
-- UV（Pythonパッケージマネージャー）- インストール方法: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+- Anthropic Claude Desktop app (or Cursor)
+- UV (Python package manager) - Install with: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
-### インストール手順
+### Setup Steps
 
-1. **リポジトリのクローン**
+1. **Clone the Repository**
 
 ```bash
 git clone https://github.com/yourusername/g-shell-mcp.git
 cd g-shell-mcp
 ```
 
-2. **pyproject.tomlの設定と依存関係のインストール**
+2. **Configure pyproject.toml and Install Dependencies**
 
-pyproject.tomlを設定します：
+Set up pyproject.toml:
 ```bash
 uv venv
 source .venv/bin/activate  # Unix/macOS
@@ -38,18 +38,18 @@ source .venv/bin/activate  # Unix/macOS
 uv pip install .
 ```
 
-3. **MCPサーバーの設定**
+3. **Configure MCP Server**
 
-以下のJSONを適切な{{PATH}}の値で設定してください：
+Configure the following JSON with appropriate {{PATH}} values:
 
 ```json
 {
   "mcpServers": {
     "g-shell": {
-      "command": "{{PATH_TO_UV}}", // `which uv` の出力を入力
+      "command": "{{PATH_TO_UV}}", // Output of `which uv`
       "args": [
         "--directory",
-        "{{PATH_TO_SRC}}/g-shell-mcp", // リポジトリのパスを入力
+        "{{PATH_TO_SRC}}/g-shell-mcp", // Path to repository
         "run",
         "main.py"
       ]
@@ -58,32 +58,43 @@ uv pip install .
 }
 ```
 
-**Claude**の場合、このファイルを以下の場所に`claude_desktop_config.json`として保存：
+For **Claude**, save as `claude_desktop_config.json` at:
 ```
 ~/Library/Application Support/Claude/claude_desktop_config.json
 ```
 
-**Cursor**の場合、このファイルを以下の場所に`mcp.json`として保存：
+For **Cursor**, save as `mcp.json` at:
 ```
 ~/.cursor/mcp.json
 ```
 
-## GAS実行環境の設定
+## GAS Environment Setup
 
-1. Google Apps Scriptプロジェクトを新規作成します。
+1. Create a new Google Apps Script project.
 
-2. スクリプトプロパティの設定:
-   - プロジェクトの設定画面を開きます（⚙️アイコン）
-   - 「スクリプトプロパティ」タブを選択
-   - 「プロパティを追加」をクリック
-   - プロパティ名に`API_KEY`を入力
-   - 値に任意のAPI keyを設定（セキュリティのため、複雑な文字列を使用することを推奨）
-   - 「保存」をクリック
+2. Set up Script Properties:
+   - Open project settings (⚙️ icon)
+   - Select "Script Properties" tab
+   - Click "Add Property"
+   - Enter `API_KEY` as property name
+   - Set a value for API key (recommend using a complex string for security)
+   - Click "Save"
 
-3. 以下のコードをプロジェクトに追加します：
+   > ⚠️ **CRITICAL SECURITY WARNING**
+   >
+   > NEVER share or expose your API key and Web App URL.
+   > If these credentials are leaked, attackers can perform ANY action that your GAS script is capable of,
+   > including potentially destructive operations like:
+   > - Deleting all files in your Google Drive
+   > - Accessing and modifying all your Google Sheets
+   > - Sending emails through your account
+   > 
+   > Always treat these credentials with the highest level of security.
+
+3. Add the following code to your project:
 
 <details>
-<summary>GASコード（クリックで展開）</summary>
+<summary>GAS Code (Click to expand)</summary>
 
 ```javascript
 function doPost(e) {
@@ -195,10 +206,10 @@ function errorResponse(message) {
 
 </details>
 
-4. プロジェクトのマニフェストファイル（appsscript.json）を以下のように設定します：
+4. Configure the manifest file (appsscript.json):
 
 <details>
-<summary>appsscript.json（クリックで展開）</summary>
+<summary>appsscript.json (Click to expand)</summary>
 
 ```json
 {
@@ -309,39 +320,36 @@ function errorResponse(message) {
 }
 ```
 
-5. Webアプリとしてデプロイ:
-   - 「デプロイ」ボタンをクリック
-   - 「新しいデプロイ」を選択
-   - 「種類の選択」で「Webアプリ」を選択
-   - 以下の設定を行います：
-     - 「次のユーザーとして実行」→ 自分
-     - 「アクセスできるユーザー」→ 全員
-   - 「デプロイ」をクリック
-   - 認証を求められた場合は許可
-   - デプロイ後に表示される「Webアプリ URL」をコピー
+</details>
 
-6. 環境変数の設定:
-   - `.env.example`をコピーして`.env`ファイルを作成:
+5. Deploy as Web App:
+   - Click "Deploy" button
+   - Select "New deployment"
+   - Choose "Web app" as type
+   - Configure settings:
+     - "Execute as" → yourself
+     - "Who has access" → anyone
+   - Click "Deploy"
+   - Authorize if prompted
+   - Copy the "Web app URL" shown after deployment
+
+6. Set Environment Variables:
+   - Create `.env` file by copying `.env.example`:
      ```bash
      cp .env.example .env
      ```
-   - `.env`ファイルを編集し、以下の値を設定:
+   - Edit `.env` file with these values:
      ```bash
-     # GAS設定
-     GAS_API_KEY=手順2で設定したAPI key
-     GAS_URL=手順5でコピーしたWebアプリ URL
+     # GAS Settings
+     GAS_API_KEY=API key from step 2
+     GAS_URL=Web app URL from step 5
      ```
 
+## Usage
 
-</details>
+G-Shell MCP server provides the following tools:
+- **execute_gas**: Execute GAS scripts
 
-## 使用方法
+## License
 
-G-Shell MCPサーバーは以下のツールを提供します：
-
-- **execute_gas**: GASスクリプトを実行
-
-
-## ライセンス
-
-MITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
+Released under the MIT License. See [LICENSE](LICENSE) file for details.
