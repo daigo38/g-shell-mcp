@@ -6,7 +6,7 @@ G-Shell MCPは、Google Apps Script (GAS) を効率的に実行・管理する�
 
 > 🌟 **すぐに試してみる！**
 >
-> g-shellはGASSISTANTというAI搭載のGASエディタに搭載された機能です。
+> G-ShellはGASSISTANTというAI搭載のGASエディタに搭載された機能です。
 > すぐ試したい場合、[GASSISTANT](https://www.gassistant.app)でお試しください！
 
 ## 機能
