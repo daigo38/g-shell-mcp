@@ -6,7 +6,7 @@ import os
 from typing import Optional, List, Dict, Any
 from dotenv import load_dotenv
 
-# 環境変数の読み込み
+# Load environment variables
 load_dotenv()
 
 mcp = FastMCP("g-shell")
@@ -19,26 +19,26 @@ async def execute_gas_code(
     properties: Dict[str, Any] = None
 ) -> Dict[str, Any]:
     """
-    Google Apps Script (GAS)のWebアプリにコードを送信して実行します。
+    Execute Google Apps Script (GAS) code in a secure virtual environment.
     
     Args:
-        code: 実行するGASコード
-        function_name: 実行する関数名
-        args: 関数に渡す引数のリスト（オプション）
-        properties: スクリプトプロパティ（オプション）
+        code: GAS code to execute
+        function_name: Name of the function to execute
+        args: List of arguments to pass to the function (optional)
+        properties: Script properties (optional)
         
     Returns:
-        Dict[str, Any]: GASの実行結果
+        Dict[str, Any]: GAS execution result
     """
     try:
-        # 環境変数から設定を取得
+        # Get settings from environment variables
         gas_url = os.getenv('GAS_URL')
         gas_api_key = os.getenv('GAS_API_KEY')
         
         if not gas_url:
-            return {"error": "GAS_URLが設定されていません"}
+            return {"error": "GAS_URL is not set"}
         
-        # リクエストデータの準備
+        # Prepare request data
         request_data = {
             "apiKey": gas_api_key,
             "data": {
@@ -49,7 +49,7 @@ async def execute_gas_code(
             }
         }
         
-        # GASにリクエスト送信
+        # Send request to GAS
         response = requests.post(gas_url, json=request_data)
         response.raise_for_status()
         
@@ -57,11 +57,11 @@ async def execute_gas_code(
         
     except requests.exceptions.RequestException as e:
         return {
-            "error": f"HTTPリクエストエラー: {str(e)}"
+            "error": f"HTTP request error: {str(e)}"
         }
     except Exception as e:
         return {
-            "error": f"実行エラー: {str(e)}"
+            "error": f"Execution error: {str(e)}"
         }
 
 if __name__ == "__main__":
