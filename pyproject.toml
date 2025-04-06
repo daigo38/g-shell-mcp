@@ -1,0 +1,13 @@
+[project]
+name = "g-shell"
+version = "0.1.0"
+description = "G-Shell MCPサーバー"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=1.6.0",
+    "fastapi>=0.68.0",
+    "uvicorn>=0.15.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0"
+]
